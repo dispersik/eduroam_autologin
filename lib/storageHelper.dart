@@ -4,18 +4,23 @@ import 'package:eduroam_autologin/globals.dart';
 
 Future<String> loadLogin() async {
   final prefs = await SharedPreferences.getInstance();
-  final login = prefs.getString('login');
-
-  return login;
+  return prefs.getString('login');
 }
 
 Future<String> loadPassword() async {
   final prefs = await SharedPreferences.getInstance();
-  final password = prefs.getString('password');
-
-  return password;
+  return prefs.getString('password');
 }
 
+Future<bool> loadAutoLoginState() async {
+  final prefs = await SharedPreferences.getInstance();
+  return prefs.getBool('autologinState');
+}
+
+Future saveAutloginState(bool value) async {
+  final prefs = await SharedPreferences.getInstance();
+  prefs.setBool('autologinState', value);
+}
 
 Future saveLogin(String login) async {
   final prefs = await SharedPreferences.getInstance();
@@ -35,6 +40,8 @@ Future saveData(String login, String password) async {
 }
 
 Future loadData() async {
-  login = await loadLogin();
-  password = await loadPassword();
+  login = await loadLogin() ?? '';
+  password = await loadPassword() ?? '';
+  autologinState = await loadAutoLoginState() ?? false;
+  print("load data occurs:\nlogin: $login\n$password: \nstate: $autologinState");
 }

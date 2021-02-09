@@ -38,14 +38,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    setState(() async {
-      await loadData().then((value) {
+
+    if (afterStartUp) {
+      loadData().then((value) {
         loginController.text = login;
         passwordController.text = password;
       });
-    });
-
-    if (afterStartUp) {
+      setState(() {
+      });
       if (autologinState) connectToEduroam(login, password);
       afterStartUp = false;
     }

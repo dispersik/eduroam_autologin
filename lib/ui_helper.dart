@@ -4,9 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import "package:eduroam_autologin/globals.dart";
 
-final loginController = TextEditingController();
-final passwordController = TextEditingController();
-
 Color _enabledColor = Colors.lightGreen;
 Color _disabledColor = Colors.redAccent;
 
@@ -97,6 +94,7 @@ List<Widget> passwordElements(void callSetState()) {
             style: _styleDarkValue(),
             onChanged: (text) {
               valueChanged = true;
+              // passwordController.text = text;
               callSetState();
             },
             controller: passwordController,
@@ -173,8 +171,10 @@ Widget autologinModeElement(void callSetState()) {
     ),
     onTap: () {
       autologinState = !autologinState;
-      print("autologin state: $autologinState");
-      callSetState();
+      saveAutloginState(autologinState).then((value) {
+        print("autologin state: $autologinState");
+        callSetState();
+      });
     },
   );
 }
