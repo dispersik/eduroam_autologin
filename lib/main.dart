@@ -1,8 +1,12 @@
+import 'package:eduroam_autologin/networkRoutine.dart';
+import 'package:eduroam_autologin/storageHelper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:eduroam_autologin/ui_helper.dart';
+
+import 'globals.dart';
 
 void main() {
   runApp(MyApp());
@@ -30,15 +34,24 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  void _callSetState() => setState((){});
 
   @override
   Widget build(BuildContext context) {
-    void _callSetState() => setState((){});
+    setState(() async {
+      await loadData().then((value) {
+        loginController.text = login;
+        passwordController.text = password;
+      });
+    });
+
+    if (afterStartUp) {
+      if (autologinState) connectToEduroam(login, password);
+      afterStartUp = false;
+    }
+
     return Scaffold(
       backgroundColor: Colors.white,
-      // appBar: AppBar(
-      //   title: Text(widget.title),
-      // ),
       body: ListView(
         children: [
           Column(

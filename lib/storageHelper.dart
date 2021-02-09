@@ -1,4 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
+import "dart:async";
+import 'package:eduroam_autologin/globals.dart';
 
 Future<String> loadLogin() async {
   final prefs = await SharedPreferences.getInstance();
@@ -14,16 +16,25 @@ Future<String> loadPassword() async {
   return password;
 }
 
-void saveLogin(String login) async {
+
+Future saveLogin(String login) async {
   final prefs = await SharedPreferences.getInstance();
   prefs.setString('login', login);
 }
 
-void savePassword(String password) async {
+Future savePassword(String password) async {
   final prefs = await SharedPreferences.getInstance();
   prefs.setString('password', password);
 }
 
-void saveData() {
+Future saveData(String login, String password) async {
+  await saveLogin(login).then((value) async {
+    await savePassword(password);
+  });
+  return;
+}
 
+Future loadData() async {
+  login = await loadLogin();
+  password = await loadPassword();
 }

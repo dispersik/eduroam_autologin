@@ -6,7 +6,9 @@ void connectToEduroam(String login, String password) async {
         'http://' + login + ":" + password + '@10.0.0.10/connect.html';
     if (await canLaunch(link)) {
       await launch(link, forceSafariVC: false);
-      print('Eduroam get happen');
+      print('Eduroam get happen\nlogin: $login\npassword: $password');
     }
+  } else {
+    print('NULL');
   }
 }

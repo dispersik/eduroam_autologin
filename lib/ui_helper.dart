@@ -1,12 +1,8 @@
+import 'package:eduroam_autologin/networkRoutine.dart';
 import 'package:eduroam_autologin/storageHelper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-
-String login;
-String password;
-
-bool valueChanged = true;
-bool autologinState = true;
+import "package:eduroam_autologin/globals.dart";
 
 final loginController = TextEditingController();
 final passwordController = TextEditingController();
@@ -15,14 +11,12 @@ Color _enabledColor = Colors.lightGreen;
 Color _disabledColor = Colors.redAccent;
 
 TextStyle _styleDarkKey() => TextStyle(
-      // color: Colors.red[50].withOpacity(0.9),
       color: Colors.black54,
       fontSize: 20,
       fontWeight: FontWeight.w300,
     );
 
 TextStyle _styleDarkValue() => TextStyle(
-      // color: Colors.red[50].withOpacity(0.9),
       color: Colors.black38,
       fontSize: 20,
       fontWeight: FontWeight.w200,
@@ -73,7 +67,6 @@ List<Widget> loginElements(void callSetState()) {
             controller: loginController,
             onChanged: (text) {
               valueChanged = true;
-              // changeLogin(text);
               callSetState();
             },
             decoration: InputDecoration(
@@ -104,7 +97,6 @@ List<Widget> passwordElements(void callSetState()) {
             style: _styleDarkValue(),
             onChanged: (text) {
               valueChanged = true;
-              // changePassword(text);
               callSetState();
             },
             controller: passwordController,
@@ -144,11 +136,12 @@ Widget credentialElement(void callSetState()) {
 
 Widget saveDataElement(void callSetState()) {
   return GestureDetector(
-      onTap: () {
-        // saveData();
-        valueChanged = false;
-        print("save button tap\n$valueChanged");
-        callSetState();
+      onTap: () async {
+        saveData(login, password).then((value) {
+          valueChanged = false;
+          print("save button tap\n$valueChanged");
+          callSetState();
+        });
       },
       child: Container(
         decoration: BoxDecoration(
@@ -188,7 +181,9 @@ Widget autologinModeElement(void callSetState()) {
 
 Widget testElement() {
   return GestureDetector(
-    onTap: () {},
+    onTap: () {
+      connectToEduroam(login, password);
+    },
     child: Container(
       decoration: BoxDecoration(
         border: Border.all(color: Colors.black26),
