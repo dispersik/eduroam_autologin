@@ -23,3 +23,7 @@ void savePassword(String password) async {
   final prefs = await SharedPreferences.getInstance();
   prefs.setString('password', password);
 }
+
+void saveData() {
+
+}
