@@ -39,10 +39,11 @@ TextStyle _autologinStyle() => TextStyle(
 
 Widget titleElement() {
   return Padding(
-    padding: EdgeInsets.only(top: 40),
+    padding: EdgeInsets.only(top: 20),
     child: Text(
       "eduroam autologin",
       style: _titleStyle(),
+      textAlign: TextAlign.center,
     ),
   );
 }
@@ -135,8 +136,10 @@ Widget credentialElement(void callSetState()) {
 Widget saveDataElement(void callSetState()) {
   return GestureDetector(
       onTap: () async {
-        saveData(login, password).then((value) {
+        saveData(loginController.text, passwordController.text).then((value) {
           valueChanged = false;
+          login = loginController.text;
+          password = passwordController.text;
           print("save button tap\n$valueChanged");
           callSetState();
         });
@@ -204,6 +207,7 @@ Widget testElement() {
 }
 
 String _getAutologinText() {
+  if (autologinState==null) return 'Автологин загружается';
   return autologinState ? 'Автологин включен' : 'Автологин отключен';
 }
 
@@ -211,6 +215,7 @@ String _getSaveButtonText() =>
     !valueChanged ? 'Данные сохранены' : 'Сохранить данные';
 
 Color _getAutologinColor() {
+  if (autologinState==null) return Colors.black26;
   return autologinState ? _enabledColor : _disabledColor;
 }
 

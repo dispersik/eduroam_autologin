@@ -39,15 +39,15 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
 
-    if (afterStartUp) {
+    if (initState) {
       loadData().then((value) {
         loginController.text = login;
         passwordController.text = password;
+        if (autologinState==null) autologinState = false;
+        initState = false;
+        setState(() {});
+        if (autologinState) connectToEduroam(login, password);
       });
-      setState(() {
-      });
-      if (autologinState) connectToEduroam(login, password);
-      afterStartUp = false;
     }
 
     return Scaffold(
