@@ -1,8 +1,8 @@
-import 'package:eduroam_autologin/networkRoutine.dart';
-import 'package:eduroam_autologin/storageHelper.dart';
+import 'package:eduroam_autologin/back/networkRoutine.dart';
+import 'package:eduroam_autologin/back/storageHelper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import "package:eduroam_autologin/globals.dart";
+import 'package:eduroam_autologin/back/globals.dart';
 
 Color _enabledColor = Colors.lightGreen;
 Color _disabledColor = Colors.redAccent;
@@ -217,10 +217,6 @@ String _getSaveButtonText() =>
 Color _getAutologinColor() {
   if (autologinState==null) return Colors.black26;
   return autologinState ? _enabledColor : _disabledColor;
-}
-
-Color _getAutologinLightColor() {
-  return autologinState ? Colors.lightGreen[200] : Colors.red[200];
 }
 
 Color _getSaveButtonColor() {
