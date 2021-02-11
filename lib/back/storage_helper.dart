@@ -1,6 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import "dart:async";
-import 'package:eduroam_autologin/globals.dart';
+import 'package:eduroam_autologin/back/globals.dart';
 
 Future<String> loadLogin() async {
   final prefs = await SharedPreferences.getInstance();
