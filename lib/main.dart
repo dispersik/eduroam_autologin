@@ -1,5 +1,7 @@
 import 'package:eduroam_autologin/back/networkRoutine.dart';
 import 'package:eduroam_autologin/back/storageHelper.dart';
+import 'package:eduroam_autologin/front/widgets/autologinModeButton.dart';
+import 'package:eduroam_autologin/front/widgets/eduroamTitle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -13,11 +15,10 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'rfct eduroam autologin',
+      title: 'eduroam autologin',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -45,7 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
         passwordController.text = password;
         if (autologinState==null) autologinState = false;
         initState = false;
-        setState(() {});
+        // setState(() {});
         if (autologinState) connectToEduroam(login, password);
       });
     }
@@ -57,11 +58,21 @@ class _MyHomePageState extends State<MyHomePage> {
           Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            titleElement(),
+            const EduroamTitle(),
+            // titleElement(),
             credentialElement(_callSetState),
             saveDataElement(_callSetState),
             SizedBox(height: 20,),
-            autologinModeElement(_callSetState),
+            AutologinModeButton(
+              mode: autologinState,
+              onPressed: () {
+                autologinState = !autologinState;
+                saveAutloginState(autologinState).then((value) {
+                  print("autologin state: $autologinState");
+                  setState(() {});
+                });
+              },
+            ),
             SizedBox(height: 20,),
             testElement(),
           ],

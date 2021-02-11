@@ -3,46 +3,14 @@ import 'package:eduroam_autologin/back/storageHelper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:eduroam_autologin/back/globals.dart';
-
-Color _enabledColor = Colors.lightGreen;
-Color _disabledColor = Colors.redAccent;
-
-TextStyle _styleDarkKey() => TextStyle(
-      color: Colors.black54,
-      fontSize: 20,
-      fontWeight: FontWeight.w300,
-    );
-
-TextStyle _styleDarkValue() => TextStyle(
-      color: Colors.black38,
-      fontSize: 20,
-      fontWeight: FontWeight.w200,
-    );
-
-TextStyle _titleStyle() => TextStyle(
-      color: Colors.black54,
-      fontSize: 40,
-      fontWeight: FontWeight.w100,
-    );
-
-TextStyle _saveButtonStyle() => TextStyle(
-      color: _getSaveButtonColor(),
-      fontSize: 25,
-      fontWeight: FontWeight.w100,
-    );
-
-TextStyle _autologinStyle() => TextStyle(
-      color: _getAutologinColor(),
-      fontSize: 25,
-      fontWeight: FontWeight.w100,
-    );
+import 'ui_globals.dart';
 
 Widget titleElement() {
   return Padding(
     padding: EdgeInsets.only(top: 20),
     child: Text(
       "eduroam autologin",
-      style: _titleStyle(),
+      style: titleStyle(),
       textAlign: TextAlign.center,
     ),
   );
@@ -54,14 +22,14 @@ List<Widget> loginElements(void callSetState()) {
       Text(
         'Логин: ',
         textAlign: TextAlign.left,
-        style: _styleDarkKey(),
+        style: styleDarkKey(),
       ),
     ]),
     Row(
       children: <Widget>[
         Flexible(
           child: TextField(
-            style: _styleDarkValue(),
+            style: styleDarkValue(),
             controller: loginController,
             onChanged: (text) {
               valueChanged = true;
@@ -85,14 +53,14 @@ List<Widget> passwordElements(void callSetState()) {
       Text(
         'Пароль: ',
         textAlign: TextAlign.left,
-        style: _styleDarkKey(),
+        style: styleDarkKey(),
       ),
     ]),
     Row(
       children: <Widget>[
         Flexible(
           child: TextField(
-            style: _styleDarkValue(),
+            style: styleDarkValue(),
             onChanged: (text) {
               valueChanged = true;
               // passwordController.text = text;
@@ -146,13 +114,13 @@ Widget saveDataElement(void callSetState()) {
       },
       child: Container(
         decoration: BoxDecoration(
-          border: Border.all(color: _getSaveButtonColor() /*Colors.black12*/),
+          border: Border.all(color: getSaveButtonColor() /*Colors.black12*/),
         ),
         child: Padding(
           padding: EdgeInsets.all(7),
           child: Text(
-            _getSaveButtonText(),
-            style: _saveButtonStyle(),
+            getSaveButtonText(),
+            style: saveButtonStyle(),
           ),
         ),
       ));
@@ -162,13 +130,13 @@ Widget autologinModeElement(void callSetState()) {
   return GestureDetector(
     child: Container(
       decoration: BoxDecoration(
-        border: Border.all(color: _getAutologinColor()),
+        border: Border.all(color: getAutologinColor()),
       ),
       child: Padding(
         padding: EdgeInsets.all(7),
         child: Text(
-          _getAutologinText(),
-          style: _autologinStyle(),
+          getAutologinText(),
+          style: autologinStyle(),
         ),
       ),
     ),
@@ -204,21 +172,4 @@ Widget testElement() {
       ),
     ),
   );
-}
-
-String _getAutologinText() {
-  if (autologinState==null) return 'Автологин загружается';
-  return autologinState ? 'Автологин включен' : 'Автологин отключен';
-}
-
-String _getSaveButtonText() =>
-    !valueChanged ? 'Данные сохранены' : 'Сохранить данные';
-
-Color _getAutologinColor() {
-  if (autologinState==null) return Colors.black26;
-  return autologinState ? _enabledColor : _disabledColor;
-}
-
-Color _getSaveButtonColor() {
-  return !valueChanged ? _enabledColor : _disabledColor;
 }
