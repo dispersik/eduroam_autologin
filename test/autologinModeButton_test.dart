@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'container_border_color_finder.dart';
 
-import 'package:eduroam_autologin/front/widgets/autologinModeButton.dart';
+import 'package:eduroam_autologin/front/widgets/autologin_mode_button.dart';
 import 'package:eduroam_autologin/front/ui_globals.dart';
 
 void main() {
